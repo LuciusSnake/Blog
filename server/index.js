@@ -2,12 +2,14 @@ const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const apiRout = require('./api')
+const cors = require('cors')
 
 module.exports = (url) => {
   const app = express()
   const baseUrl = path.join(__dirname, '../')
 
   app.use(express.static(path.join(baseUrl, 'dist')))
+  app.use(cors({ origin: true, credentials: true }));
   app.use(bodyParser.json())
   app.use('/api/posts', apiRout)
 
