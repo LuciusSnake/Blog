@@ -1,14 +1,15 @@
 import { nanoid } from 'nanoid'
+import { Modal } from 'bootstrap'
 class Form {
   baseUrl = '/api/posts'
   constructor(formElement) {
     this.formElement = formElement
+    this.instanceModal = Modal.getOrCreateInstance(document.querySelector('#formModal'))
 
     this.init()
   }
 
   init() {
-    console.log(this.formElement);
     this.formElement.addEventListener('submit', this.handleFormSubmit.bind(this))
   }
 
@@ -24,21 +25,28 @@ class Form {
     for(const [name, value] of formData) {
       post[name] = value
     }
-    console.log(post);
-    this.sendData()
+
+    this.sendData(post)
+    this.instanceModal.hide()
+    this.formElement.reset()
   }
 
   sendData(post) {
+    const json = JSON.stringify(post)
     fetch("http://localhost:8080/api/posts", {
-      method: "GET",
+      method: 'POST',
+      body: json,
       headers: {
         'Content-Type': 'application/json',
       }
-    }).then(response => console.log(response))
-  }
-
-  logger() {
-    console.log(this.formElement)
+    })
+      .then(response => console.log(response))
+      .then(data => {
+        const event = new CustomEvent('form.sent', {
+          detail: { data }
+        })
+        window.dispatchEvent(event)
+      })
   }
 
 
