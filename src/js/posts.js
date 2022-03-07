@@ -28,8 +28,8 @@ class Posts {
 
   buildTemplate(data) {
     return `
-      <div class="island__item">
-        <h3>${data.title}</h3>
+      <div class="island__item" data-id="${data.id}">
+        <h4>${data.title}</h4>
         <time class="text-muted">${data.createAt}</time>
       </div>
     `
