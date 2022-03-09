@@ -9,6 +9,7 @@ class Posts {
   init() {
     document.addEventListener('DOMContentLoaded', this.handleDOMReady.bind(this))
     window.addEventListener('form.sent', this.handleDataSent.bind(this))
+    this.containerElement.addEventListener('click', this.handleClickListItem.bind(this))
   }
 
   handleDOMReady() {
@@ -24,6 +25,19 @@ class Posts {
     const { data } = detail
 
     this.render(data.list)
+  }
+
+  handleClickListItem(event) {
+    const listItemElement = event.target.closest('.island__item')
+
+    if(listItemElement) {
+      const {id} = listItemElement.dataset
+
+      const customEvent = new CustomEvent('post.click', {
+        detail: { id }
+      })
+      window.dispatchEvent(customEvent)
+    }
   }
 
   buildTemplate(data) {

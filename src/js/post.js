@@ -2,27 +2,44 @@ class Post {
   constructor(containerElement) {
     this.containerElement = containerElement
     this.templateElement = document.querySelector('#postTemplate')
+    this.baseUrl = 'api/posts'
 
     this.init()
   }
 
   init() {
-    this.buildTemplate()
+    window.addEventListener('post.click', this.handlePostsClick.bind(this))
+  }
+
+  handlePostsClick(event) {
+    const { id } = event.detail
+    // const url = `${this.baseUrl}/${id}`
+
+    fetch(`http://localhost:8080/api/posts/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const template = this.buildTemplate(data)
+        this.render(template)
+      })
   }
 
   buildTemplate(data) {
-    const template = this.templateElement.innerHTML
+    let template = this.templateElement.innerHTML
 
     // template = template
     //   .replaceAll('{{title}}', data.title)
     //   .replaceAll('{{createAt}}', data.createAt)
     //   .replaceAll('{{content}}', data.content)
 
-    for(const key of data) {
+    for(const key in data) {
       template = template.replaceAll(`{{${key}}}`, data[key])
     }
 
     return template
+  }
+
+  render(html) {
+    this.containerElement.innerHTML = html
   }
 }
 
