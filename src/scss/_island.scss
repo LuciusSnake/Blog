@@ -7,6 +7,16 @@ $component: 'island';
   &__item {
     padding: 1rem;
     margin-bottom: 1rem;
+
+      &_clickable {
+        cursor: pointer;
+      }
+
+      &_active {
+        h4 {
+          color: rgb(70, 70, 199);
+        }
+      }
   }
 
   &__item + &__item {
