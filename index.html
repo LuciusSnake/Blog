@@ -13,7 +13,7 @@
       <div class="island__item d-flex align-items-center">
         <h2>Blog</h2>
 
-        <button class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#formModal">Create post</button>
+        <button class="btn btn-primary ms-auto" id="buttonCreatePost">Create post</button>
       </div>
     </div>
 
@@ -43,14 +43,20 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="form">
+          <form id="form" data-method="POST">
+            <input type="hidden" name="id">
+            <input type="hidden" name="createAt">
             <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
+              <label for="title" class="form-label">Track</label>
               <input type="text" class="form-control" id="title" name="title">
             </div>
             <div class="mb-3">
-              <label for="content" class="form-label">Content</label>
-              <textarea class="form-control" id="content" name="content"></textarea>
+              <label for="contentMd" class="form-label">Album</label>
+              <textarea class="form-control" id="content" name="contentMd"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="author" class="form-label">Author</label>
+              <input type="text" class="form-control" id="author" name="author">
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
           </form>
@@ -60,9 +66,14 @@
   </div>
 
   <template id="postTemplate">
-    <h2>{{title}}</h2>
-    <p class="text-muted"><time>{{createAt}}</time></p>
-    <div>{{content}}</div>
+    <h2>${ title }</h2>
+    <p class="text-muted"><time>${ createAt }</time></p>
+    <div>${ html }</div>
+
+    <div class="mt-4">
+      <button class="btn btn-warning" data-role="edit">Edit</button>
+      <button class="btn btn-danger" data-role="remove">Delete</button>
+    </div>
   </template>
 </body>
 
