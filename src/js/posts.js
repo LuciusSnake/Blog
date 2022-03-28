@@ -12,13 +12,21 @@ class Posts {
     this.containerElement.addEventListener('click', this.handleClickListItem.bind(this))
   }
 
-  handleDOMReady() {
-    fetch("http://localhost:8080/api/posts")
-      .then(response => response.json())
-      .then(data => {
-        const { list } = data
-        this.render(list)
-      })
+  // handleDOMReady() {
+  //   fetch("http://localhost:8080/api/posts")
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       const { list } = data
+  //       this.render(list)
+  //     })
+  // }
+
+  async handleDOMReady() {
+    const response = await fetch("http://localhost:8080/api/posts")
+    const data = await response.json();
+    const { list } = data
+
+    this.render(list)
   }
 
   handleDataSent({ detail }) {

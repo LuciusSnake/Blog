@@ -31,22 +31,38 @@ class Form {
     this.formElement.reset()
   }
 
-  sendData(post) {
+  // sendData(post) {
+  //   const json = JSON.stringify(post)
+  //   fetch("http://localhost:8080/api/posts", {
+  //     method: 'POST',
+  //     body: json,
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     }
+  //   })
+  //     .then(response => console.log(response))
+  //     .then(data => {
+  //       const event = new CustomEvent('form.sent', {
+  //         detail: { data }
+  //       })
+  //       window.dispatchEvent(event)
+  //     })
+  // }
+
+  async sendData(post) {
     const json = JSON.stringify(post)
-    fetch("http://localhost:8080/api/posts", {
+    const response = await fetch("http://localhost:8080/api/posts", {
       method: 'POST',
       body: json,
       headers: {
         'Content-Type': 'application/json',
       }
     })
-      .then(response => console.log(response))
-      .then(data => {
-        const event = new CustomEvent('form.sent', {
-          detail: { data }
-        })
-        window.dispatchEvent(event)
-      })
+
+    const event = new CustomEvent('form.sent', {
+      detail: { data: response }
+    })
+    window.dispatchEvent(event)
   }
 
 

@@ -11,16 +11,28 @@ class Post {
     window.addEventListener('post.click', this.handlePostsClick.bind(this))
   }
 
-  handlePostsClick(event) {
+  // handlePostsClick(event) {
+  //   const { id } = event.detail
+  //   // const url = `${this.baseUrl}/${id}`
+
+  //   fetch(`http://localhost:8080/api/posts/${id}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const template = this.buildTemplate(data)
+  //       this.render(template)
+  //     })
+  // }
+
+  async handlePostsClick(event) {
     const { id } = event.detail
     // const url = `${this.baseUrl}/${id}`
 
-    fetch(`http://localhost:8080/api/posts/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const template = this.buildTemplate(data)
-        this.render(template)
-      })
+    const response = await fetch(`http://localhost:8080/api/posts/${id}`)
+    const data = await response.json()
+
+    const template = this.buildTemplate(data)
+
+    this.render(template)
   }
 
   buildTemplate(data) {
